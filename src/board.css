@@ -22,3 +22,24 @@
     height: 70px;
     margin: 1%;
 }
+
+.SquareGreen {
+    all: unset;
+    align-content: center;
+    background-color: green;
+    border-radius: 10%;
+    border: 2px solid var(--accent);
+    width: 70px;
+    height: 70px;
+    margin: 1%;
+}
+.SquareYellow {
+    all: unset;
+    align-content: center;
+    background-color: rgb(121, 121, 0);
+    border-radius: 10%;
+    border: 2px solid var(--accent);
+    width: 70px;
+    height: 70px;
+    margin: 1%;
+}
