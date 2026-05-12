@@ -1,0 +1,24 @@
+.board {
+    display: flex;
+    flex-direction: column;
+    background-color: none;
+    color: white;
+    margin: auto;
+    width: fit-content;
+}
+.Row {
+    display: flex;
+    flex-direction: row;
+    background-color: none;
+}
+
+.Square {
+    all: unset;
+    align-content: center;
+    background-color: var(--bg);
+    border-radius: 10%;
+    border: 2px solid var(--accent);
+    width: 70px;
+    height: 70px;
+    margin: 1%;
+}
