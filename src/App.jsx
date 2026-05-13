@@ -9,7 +9,7 @@ function App() {
   const [gameState, setGameState] = useState('playing')
   
   async function loadCSV() {
-    const response = await fetch('/Wordle/src/assets/5_letters.csv');
+    const response = await fetch('./5_letters.csv');
     const csvData = await response.text();
     setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2499)].slice(0, -1).slice(1)))
   }
