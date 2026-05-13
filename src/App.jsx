@@ -3,8 +3,8 @@ import Board from './board.jsx'
 import './App.css'
 
 function App() {
-  const [currentGuess, setCurrentGuess] = useState('')//'' means initialize as string
-  const [previousGuesses, setPreviousGuesses] = useState([])//[] means initialize as array
+  const [currentGuess, setCurrentGuess] = useState('')
+  const [previousGuesses, setPreviousGuesses] = useState([])
   const [answer, setAnswer] = useState('')
   const [gameState, setGameState] = useState('playing')
   
