@@ -2,11 +2,27 @@ import { useEffect, useState } from 'react'
 import Board from './board.jsx'
 import './App.css'
 
-
-
 function App() {
   const [currentGuess, setCurrentGuess] = useState('')//'' means initialize as string
   const [previousGuesses, setPreviousGuesses] = useState([])//[] means initialize as array
+  const [answer, setAnswer] = useState('')
+  
+  async function loadCSV() {
+    const response = await fetch('/Wordle/src/assets/5_letters.csv');
+    const csvData = await response.text();
+    setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2499)].slice(0, -1).slice(1)))
+  }
+
+  const newWordF = (event) => {
+    setCurrentGuess('')
+    setPreviousGuesses([])
+    loadCSV()
+    event.target.blur()
+  }
+
+  useEffect(() => {
+    loadCSV()
+  }, [])
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -34,8 +50,8 @@ function App() {
   return (
     <>
       <h1>WORDLE</h1>
-      <button type="button" className='newWord'>New Word</button>
-      <Board currentGuess={currentGuess} previousGuesses={previousGuesses} />
+      <button type="button" className='newWord' onClick={newWordF}>New Word</button>
+      <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} />
     </>
   )
 }

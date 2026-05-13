@@ -1,8 +1,7 @@
 
 import './board.css'
 
-function Board({currentGuess, previousGuesses}) {
-    const answer = "HELLO"
+function Board({currentGuess, previousGuesses, answer}) {
 
     return (
         <section>
@@ -11,8 +10,8 @@ function Board({currentGuess, previousGuesses}) {
                     <div key={i} className='Row'>
                         {guess.split("").map((letter, j) => (
                             <div key={j} className={
-                                answer[j] === letter ? "SquareGreen" :
-                                answer.includes(letter) ? "SquareYellow" :
+                                answer[j] === letter.toLowerCase() ? "SquareGreen" :
+                                answer.includes(letter.toLowerCase()) ? "SquareYellow" :
                                 "Square"
                             }
                             >
