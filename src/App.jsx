@@ -6,6 +6,7 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState('')//'' means initialize as string
   const [previousGuesses, setPreviousGuesses] = useState([])//[] means initialize as array
   const [answer, setAnswer] = useState('')
+  const [gameState, setGameState] = useState('playing')
   
   async function loadCSV() {
     const response = await fetch('/Wordle/src/assets/5_letters.csv');
@@ -16,6 +17,7 @@ function App() {
   const newWordF = (event) => {
     setCurrentGuess('')
     setPreviousGuesses([])
+    setGameState('playing')
     loadCSV()
     event.target.blur()
   }
@@ -30,7 +32,7 @@ function App() {
         if (event.key.match(/^[a-zA-Z]$/) && currentGuess.length < 5) {
           setCurrentGuess(currentGuess + event.key.toUpperCase())
         }
-        if (event.key === 'Backspace') {
+        if (event.key === 'Backspace' && gameState === "playing") {
           if (currentGuess.length == 1 || currentGuess.length == 0) {
             setCurrentGuess('')
           } else {
@@ -38,20 +40,25 @@ function App() {
           }
         }
         if (event.key === 'Enter' && currentGuess.length == 5) {
-          setPreviousGuesses([...previousGuesses,currentGuess])
-          // console.log("Prev g f: ", previousGuesses)
-          setCurrentGuess('')
+          if (answer === currentGuess.toLowerCase()) {
+            console.log("You win")
+            setGameState("won")
+          } else {
+            setPreviousGuesses([...previousGuesses,currentGuess])
+            // console.log("Prev g f: ", previousGuesses)
+            setCurrentGuess('')
+          }
         }
       }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [currentGuess, previousGuesses])
+  }, [currentGuess, previousGuesses, gameState])
 
   return (
     <>
       <h1>WORDLE</h1>
       <button type="button" className='newWord' onClick={newWordF}>New Word</button>
-      <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} />
+      <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} gameState={gameState} />
     </>
   )
 }
