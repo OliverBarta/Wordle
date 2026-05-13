@@ -1,8 +1,36 @@
 
 import './board.css'
 
-function Board({currentGuess, previousGuesses, answer}) {
+function Board({currentGuess, previousGuesses, answer, gameState}) {
+    const checkYellow = (guess, letter, answer, index) => {
+        var guessArr = guess.split("")
+        var answerArr = answer.split("")
+        
+        for (let i = 0; i < 5; i++) {
+            if (guessArr[i].toLowerCase() === answerArr[i]) {
+                guessArr[i] = ""
+                answerArr[i] = ""
+            }
+        }
 
+        var guessLetterInAnswer = 0;
+        for (let i = 0; i < 5; i++) {
+            if (answerArr[i] === letter.toLowerCase()) {
+                guessLetterInAnswer += 1
+            }
+        }
+
+        while (guessLetterInAnswer > 0) {
+            var indexOfLetter = guessArr.indexOf(letter)
+            if (indexOfLetter === index) {
+                return true
+            }
+            guessArr[indexOfLetter] = ""
+            guessLetterInAnswer -= 1
+        }
+
+        return false
+    };
     return (
         <section>
             <div className="board">
@@ -11,7 +39,7 @@ function Board({currentGuess, previousGuesses, answer}) {
                         {guess.split("").map((letter, j) => (
                             <div key={j} className={
                                 answer[j] === letter.toLowerCase() ? "SquareGreen" :
-                                answer.includes(letter.toLowerCase()) ? "SquareYellow" :
+                                checkYellow(guess, letter, answer, j) ? "SquareYellow" :
                                 "Square"
                             }
                             >
@@ -22,7 +50,7 @@ function Board({currentGuess, previousGuesses, answer}) {
                 ))}
                 <div className="Row">
                     {[0,1,2,3,4].map(i => (
-                        <div key={i} className="Square">
+                        <div key={i} className={gameState === "won" ? "SquareGreen" : "Square"}>
                         {currentGuess[i] || ''}
                         </div>
                     ))}
