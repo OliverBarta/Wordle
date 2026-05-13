@@ -26,7 +26,7 @@
 .SquareGreen {
     all: unset;
     align-content: center;
-    background-color: green;
+    background-color: var(--greenSquare);
     border-radius: 10%;
     border: 2px solid var(--accent);
     width: 70px;
@@ -36,7 +36,7 @@
 .SquareYellow {
     all: unset;
     align-content: center;
-    background-color: rgb(121, 121, 0);
+    background-color: var(--yellowSquare);
     border-radius: 10%;
     border: 2px solid var(--accent);
     width: 70px;

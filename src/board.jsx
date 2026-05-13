@@ -6,6 +6,7 @@ function Board({currentGuess, previousGuesses, answer, gameState}) {
         var guessArr = guess.split("")
         var answerArr = answer.split("")
         
+        // Removes green answers
         for (let i = 0; i < 5; i++) {
             if (guessArr[i].toLowerCase() === answerArr[i]) {
                 guessArr[i] = ""
@@ -13,6 +14,7 @@ function Board({currentGuess, previousGuesses, answer, gameState}) {
             }
         }
 
+        // how many times the guess letter is in the answer and is not green (number of yellows)
         var guessLetterInAnswer = 0;
         for (let i = 0; i < 5; i++) {
             if (answerArr[i] === letter.toLowerCase()) {
