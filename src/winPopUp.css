@@ -16,24 +16,27 @@
 }
 
 .housing {
-    all: unset;
     position: fixed;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-top: 13%;
     width: 100%;
+    justify-content: center;
     animation: popIn 0.8s forwards;
 }
 
 .housing img {
-    scale: 0.2;
-    position: relative;
+    margin: 50px;
+    width: 150px;
+    height: 150px;
 }
 
 .trumpetLeft {
-    translate: 160px 0;
     z-index: 100;
 }
 
 .trumpetRight {
-    translate: -160px 0;
     z-index: 100;
 }
 
@@ -48,7 +51,23 @@
     margin: auto;
     width: 280px;
     height: 210px;
-    background-color: var(--bg);
+    background-image: linear-gradient(var(--greenSquare), var(--bg), var(--bg));
+    border-radius: 10%;
+    border: 2px solid var(--accent);
+    color: var(--text-h);
+}
+.bigSquareLose {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    inset: 0;
+    margin: auto;
+    width: 280px;
+    height: 210px;
+    background-image: linear-gradient(var(--redSquare), var(--bg), var(--bg));
     border-radius: 10%;
     border: 2px solid var(--accent);
     color: var(--text-h);

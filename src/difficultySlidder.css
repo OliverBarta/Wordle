@@ -9,6 +9,7 @@
     all: unset;
     transition: scale 0.15s ease-in, color 0.15s ease-in;
     color: var(--text);
+    width: 40px;
 }
 
 .housingDifficulty button:hover {

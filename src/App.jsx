@@ -3,6 +3,7 @@ import Board from './board.jsx'
 import WinPopUp from './winPopUp.jsx'
 import DifficultySlider from './difficultySlider.jsx'
 import './App.css'
+import LosePopUp from './losePopUp.jsx'
 
 function App() {
   const [currentGuess, setCurrentGuess] = useState('')
@@ -16,7 +17,6 @@ function App() {
     const response = await fetch('./5_letters.csv');
     const csvData = await response.text();
     setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2499)].slice(0, -1).slice(1)));
-    setAnswer('hello');
   }
 
   // resets the game state and gets a new word
@@ -31,6 +31,9 @@ function App() {
 
   const closeWinPopUp = () => {
     setGameState('showingWon')
+  }
+  const closeLostPopUp = () => {
+    setGameState('showingLoss')
   }
 
   // runs at the start
@@ -54,17 +57,22 @@ function App() {
         }
         // Submitting a guess
         if (event.key === 'Enter' && currentGuess.length == 5) {
-          if (answer === currentGuess.toLowerCase()) {
-            console.log("You win")
-            setGameState("won")
+          console.log(gameState)
+          if (gameState === "showingLoss" || gameState === "showingWon") {
+            pass
           } else {
-            if (previousGuesses.length + 1 >= guessesAllowed) {
-              console.log("You lost")
-              setGameState("lost")
+            if (answer === currentGuess.toLowerCase()) {
+              console.log("You win")
+              setGameState("won")
             } else {
-              setPreviousGuesses([...previousGuesses,currentGuess])
-              setCurrentGuess('')
-              setGameState('playing')
+              if (previousGuesses.length + 1 >= guessesAllowed) {
+                console.log("You lost")
+                setGameState("lost")
+              } else {
+                setPreviousGuesses([...previousGuesses,currentGuess])
+                setCurrentGuess('')
+                setGameState('playing')
+              }
             }
           }
         }
@@ -80,6 +88,7 @@ function App() {
       <button type="button" className='newWord' onClick={newWordF}>New Word</button>
       <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} gameState={gameState} />
       <WinPopUp gameState={gameState} resetGame={closeWinPopUp} />
+      <LosePopUp gameState={gameState} resetGame={closeLostPopUp} answer={answer} />
     </>
   )
 }
