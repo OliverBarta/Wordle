@@ -5,7 +5,7 @@ function Board({currentGuess, previousGuesses, answer, gameState}) {
     const checkYellow = (guess, letter, answer, index) => {
         var guessArr = guess.split("")
         var answerArr = answer.split("")
-        
+
         // Removes green answers
         for (let i = 0; i < 5; i++) {
             if (guessArr[i].toLowerCase() === answerArr[i]) {
@@ -52,7 +52,7 @@ function Board({currentGuess, previousGuesses, answer, gameState}) {
                 ))}
                 <div className="Row">
                     {[0,1,2,3,4].map(i => (
-                        <div key={i} className={gameState === "won" ? "SquareGreen" : "Square"}>
+                        <div key={i} className={gameState === "won" || gameState === "showing" ? "SquareGreen" : "Square"}>
                         {currentGuess[i] || ''}
                         </div>
                     ))}

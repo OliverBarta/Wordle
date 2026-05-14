@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Board from './board.jsx'
+import WinPopUp from './winPopUp.jsx'
 import './App.css'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     const response = await fetch('./5_letters.csv');
     const csvData = await response.text();
     setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2499)].slice(0, -1).slice(1)))
+    setAnswer("hello")
   }
 
   // resets the game state and gets a new word
@@ -23,6 +25,10 @@ function App() {
     loadCSV()
     // fixes a bug where hitting enter resets the game after hitting the new word button
     event.target.blur()
+  }
+
+  const closePopUp = () => {
+    setGameState('showing')
   }
 
   // runs at the start
@@ -64,6 +70,7 @@ function App() {
       <h1>WORDLE</h1>
       <button type="button" className='newWord' onClick={newWordF}>New Word</button>
       <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} gameState={gameState} />
+      <WinPopUp gameState={gameState} resetGame={closePopUp} />
     </>
   )
 }
