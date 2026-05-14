@@ -36,16 +36,6 @@ function App() {
     setGameState('showingLoss')
   }
 
-  useEffect(() => {
-    if (gameState === "preGame") {
-      if (guessesAllowed-1 > previousGuesses.length) {
-        setPreviousGuesses([...previousGuesses, "     "])
-      } else if (guessesAllowed-1 < previousGuesses.length) {
-        setPreviousGuesses(prevItems => prevItems.slice(0, -1))
-      }
-    }
-  }, [guessesAllowed, previousGuesses, gameState])
-
   // runs at the start
   useEffect(() => {
     loadCSV()
@@ -53,10 +43,6 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-        if (gameState === "preGame") {
-          setPreviousGuesses([])
-          setGameState("playing")
-        }
         // Adding a letter to the current guess
         if (event.key.match(/^[a-zA-Z]$/) && currentGuess.length < 5) {
           setCurrentGuess(currentGuess + event.key.toUpperCase())
@@ -99,7 +85,7 @@ function App() {
       <h1>WORDLE</h1>
       <DifficultySlider guessesAllowed={guessesAllowed} setGuessesAllowed={setGuessesAllowed} gameState={gameState}/>
       <button type="button" className='newWord' onClick={newWordF}>New Word</button>
-      <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} gameState={gameState} />
+      <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} gameState={gameState} guessesAllowed={guessesAllowed}/>
       <WinPopUp gameState={gameState} resetGame={closeWinPopUp} />
       <LosePopUp gameState={gameState} resetGame={closeLostPopUp} answer={answer} />
     </>

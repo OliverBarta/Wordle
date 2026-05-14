@@ -1,8 +1,9 @@
 
 import './board.css'
 
-function Board({currentGuess, previousGuesses, answer, gameState}) {
+function Board({currentGuess, previousGuesses, answer, gameState, guessesAllowed}) {
     const checkYellow = (guess, letter, answer, index) => {
+        // checks if a letter of a guess should be yellow (return true) or not (return false)
         var guessArr = guess.split("")
         var answerArr = answer.split("")
 
@@ -36,6 +37,7 @@ function Board({currentGuess, previousGuesses, answer, gameState}) {
     return (
         <section>
             <div className="board">
+                {/* The row(s) with the previous guess(es) */}
                 {previousGuesses.map((guess, i) => (
                     <div key={i} className='Row'>
                         {guess.split("").map((letter, j) => (
@@ -50,6 +52,7 @@ function Board({currentGuess, previousGuesses, answer, gameState}) {
                         ))}
                     </div>
                 ))}
+                {/* The row with the current guess */}
                 <div className="Row">
                     {[0,1,2,3,4].map(i => (
                         <div key={i} className={gameState === "won" || gameState === "showingWon" ? "SquareGreen" : 
@@ -59,6 +62,14 @@ function Board({currentGuess, previousGuesses, answer, gameState}) {
                         </div>
                     ))}
                 </div>
+                {/* The grey squares, unguessed rows */}
+                {Array.from({length: guessesAllowed-1-previousGuesses.length}, (_, i) => (
+                    <div key={i} className="Row">
+                        {"     ".split("").map((letter, j) => (
+                            <div key={j} className='SquareGrey'>{letter}</div>
+                        ))}
+                    </div>
+                ))}
             </div>
         </section>
     )
