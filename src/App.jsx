@@ -47,7 +47,8 @@ function App() {
   async function loadCSV() {
     const response = await fetch('./5_letters.csv');
     const csvData = await response.text();
-    setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2499)].slice(0, -1).slice(1)));
+    // setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2499)].slice(0, -1).slice(1)));
+    setAnswer("hello")
   }
 
   // resets the game state and gets a new word
@@ -71,6 +72,8 @@ function App() {
   useEffect(() => {
     loadCSV()
   }, [])
+
+  
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -119,7 +122,7 @@ function App() {
       <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} gameState={gameState} guessesAllowed={guessesAllowed}/>
       <WinPopUp gameState={gameState} resetGame={closeWinPopUp} />
       <LosePopUp gameState={gameState} resetGame={closeLostPopUp} answer={answer} />
-      <Keyboard onLetter={handleLetter} onBackspace={handleBackspace} onEnter={handleEnter} />
+      <Keyboard onLetter={handleLetter} onBackspace={handleBackspace} onEnter={handleEnter} previousGuesses={previousGuesses} answer={answer}/>
     </>
   )
 }

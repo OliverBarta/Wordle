@@ -23,3 +23,29 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.keyYellow {
+    min-width: 30px;
+    height: 50px;
+    padding: 0 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: var(--yellowSquare);
+    color: var(--text-h);
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.keyGreen {
+    min-width: 30px;
+    height: 50px;
+    padding: 0 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: var(--greenSquare);
+    color: var(--text-h);
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+}
