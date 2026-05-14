@@ -52,7 +52,9 @@ function Board({currentGuess, previousGuesses, answer, gameState}) {
                 ))}
                 <div className="Row">
                     {[0,1,2,3,4].map(i => (
-                        <div key={i} className={gameState === "won" || gameState === "showing" ? "SquareGreen" : "Square"}>
+                        <div key={i} className={gameState === "won" || gameState === "showingWon" ? "SquareGreen" : 
+                        gameState === "lost" || gameState === "showingLoss" ? "SquareRed" :
+                        "Square"}>
                         {currentGuess[i] || ''}
                         </div>
                     ))}

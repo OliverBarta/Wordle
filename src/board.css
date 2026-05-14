@@ -43,3 +43,13 @@
     height: 70px;
     margin: 1%;
 }
+.SquareRed {
+    all: unset;
+    align-content: center;
+    background-color: var(--redSquare);
+    border-radius: 10%;
+    border: 2px solid var(--accent);
+    width: 70px;
+    height: 70px;
+    margin: 1%;
+}

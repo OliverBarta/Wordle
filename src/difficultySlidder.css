@@ -1,0 +1,17 @@
+.housingDifficulty {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    gap: 1rem;
+}
+
+.housingDifficulty button {
+    all: unset;
+    transition: scale 0.15s ease-in, color 0.15s ease-in;
+    color: var(--text);
+}
+
+.housingDifficulty button:hover {
+    scale: 1.2;
+    color: var(--text-h)
+}

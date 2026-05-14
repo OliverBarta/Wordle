@@ -17,7 +17,8 @@
 
 .housing {
     all: unset;
-    position: relative;
+    position: fixed;
+    width: 100%;
     animation: popIn 0.8s forwards;
 }
 
