@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Board from './board.jsx'
 import WinPopUp from './winPopUp.jsx'
 import DifficultySlider from './difficultySlider.jsx'
+import Keyboard from './keyboard.jsx'
 import './App.css'
 import LosePopUp from './losePopUp.jsx'
 
@@ -11,6 +12,36 @@ function App() {
   const [answer, setAnswer] = useState('')
   const [gameState, setGameState] = useState('preGame')
   const [guessesAllowed, setGuessesAllowed] = useState(6)
+
+  const handleLetter = (letter) => {
+    if (currentGuess.length < 5) {
+      setCurrentGuess(currentGuess + letter)
+    }
+  }
+
+  const handleBackspace = () => {
+    if (currentGuess.length <= 1) {
+      setCurrentGuess('')
+    } else {
+      setCurrentGuess(currentGuess.slice(0, -1))
+    }
+  }
+
+  const handleEnter = () => {
+    if (currentGuess.length == 5) {
+      if (answer === currentGuess.toLowerCase()) {
+        setGameState("won")
+      } else {
+        if (previousGuesses.length + 1 >= guessesAllowed) {
+          setGameState("lost")
+        } else {
+          setPreviousGuesses([...previousGuesses, currentGuess])
+          setCurrentGuess('')
+          setGameState('playing')
+        }
+      }
+    }
+  }
 
   // reads in the csv and sets 'answer' to a random word from the csv
   async function loadCSV() {
@@ -88,6 +119,7 @@ function App() {
       <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} gameState={gameState} guessesAllowed={guessesAllowed}/>
       <WinPopUp gameState={gameState} resetGame={closeWinPopUp} />
       <LosePopUp gameState={gameState} resetGame={closeLostPopUp} answer={answer} />
+      <Keyboard onLetter={handleLetter} onBackspace={handleBackspace} onEnter={handleEnter} />
     </>
   )
 }
