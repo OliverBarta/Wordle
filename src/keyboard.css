@@ -49,3 +49,16 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.keyGrey {
+    min-width: 30px;
+    height: 50px;
+    padding: 0 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: var(--social-bg);
+    color: var(--text-h);
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+}

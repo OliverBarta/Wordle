@@ -11,6 +11,7 @@ function Keyboard({ onLetter, onBackspace, onEnter, previousGuesses, answer }) {
     // arrays holding the yellow and green letters in any previous guess
     const [YellowKeys, setYellowKeys] = useState([])
     const [GreenKeys, setGreenKeys] = useState([])
+    const [GreyKeys, setGreyKeys] = useState([])
 
     const handleClick = (key) => {
         if (key === '⌫') onBackspace()
@@ -55,6 +56,7 @@ function Keyboard({ onLetter, onBackspace, onEnter, previousGuesses, answer }) {
     useEffect(() => {
         const newGreenKeys = []
         const newYellowKeys = []
+        const newGreyKeys = []
 
         for (let guess = 0; guess < previousGuesses.length; guess++) {
           for (let i = 0; i < previousGuesses[guess].length; i++) {
@@ -62,12 +64,16 @@ function Keyboard({ onLetter, onBackspace, onEnter, previousGuesses, answer }) {
                 newGreenKeys.push(previousGuesses[guess][i].toUpperCase())
             } else if (checkYellow(previousGuesses[guess], previousGuesses[guess][i], answer, i)) {
                 newYellowKeys.push(previousGuesses[guess][i].toUpperCase())
+            } else {
+                newGreyKeys.push(previousGuesses[guess][i].toUpperCase())
+                console.log("here")
             }
           }
         }
-
+        
         setGreenKeys(newGreenKeys)
         setYellowKeys(newYellowKeys)
+        setGreyKeys(newGreyKeys)
     }, [previousGuesses])
 
     return (
@@ -75,7 +81,7 @@ function Keyboard({ onLetter, onBackspace, onEnter, previousGuesses, answer }) {
             {ROWS.map((row, i) => (
                 <div key={i} className="keyboard-row">
                     {row.map(key => (
-                        <button key={key} className={GreenKeys.includes(key) ? "keyGreen" : YellowKeys.includes(key) ? "keyYellow" : "key"} onClick={() => handleClick(key)}>
+                        <button key={key} className={GreenKeys.includes(key) ? "keyGreen" : YellowKeys.includes(key) ? "keyYellow" : GreyKeys.includes(key) ? "keyGrey" : "key"} onClick={() => handleClick(key)}>
                             {key}
                         </button>
                     ))}
