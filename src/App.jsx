@@ -36,6 +36,16 @@ function App() {
     setGameState('showingLoss')
   }
 
+  useEffect(() => {
+    if (gameState === "preGame") {
+      if (guessesAllowed-1 > previousGuesses.length) {
+        setPreviousGuesses([...previousGuesses, "     "])
+      } else if (guessesAllowed-1 < previousGuesses.length) {
+        setPreviousGuesses(prevItems => prevItems.slice(0, -1))
+      }
+    }
+  }, [guessesAllowed, previousGuesses, gameState])
+
   // runs at the start
   useEffect(() => {
     loadCSV()
@@ -43,6 +53,10 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+        if (gameState === "preGame") {
+          setPreviousGuesses([])
+          setGameState("playing")
+        }
         // Adding a letter to the current guess
         if (event.key.match(/^[a-zA-Z]$/) && currentGuess.length < 5) {
           setCurrentGuess(currentGuess + event.key.toUpperCase())
@@ -57,7 +71,6 @@ function App() {
         }
         // Submitting a guess
         if (event.key === 'Enter' && currentGuess.length == 5) {
-          console.log(gameState)
           if (gameState === "showingLoss" || gameState === "showingWon") {
             pass
           } else {
