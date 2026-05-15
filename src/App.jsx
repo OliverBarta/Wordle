@@ -47,7 +47,7 @@ function App() {
   async function loadCSV() {
     const response = await fetch('./5_letters.csv');
     const csvData = await response.text();
-    setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2499)].slice(0, -1).slice(1)));
+    setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2500)].slice(0, -1).slice(1)));
   }
 
   // resets the game state and gets a new word
