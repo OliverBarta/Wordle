@@ -66,7 +66,6 @@ function Keyboard({ onLetter, onBackspace, onEnter, previousGuesses, answer }) {
                 newYellowKeys.push(previousGuesses[guess][i].toUpperCase())
             } else {
                 newGreyKeys.push(previousGuesses[guess][i].toUpperCase())
-                console.log("here")
             }
           }
         }

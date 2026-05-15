@@ -12,6 +12,8 @@ function App() {
   const [answer, setAnswer] = useState('')
   const [gameState, setGameState] = useState('preGame')
   const [guessesAllowed, setGuessesAllowed] = useState(6)
+  const [allowedWords, setAllowedWords] = useState([])
+  const [shaking, setShaking] = useState(false)
 
   const handleLetter = (letter) => {
     if (currentGuess.length < 5) {
@@ -48,6 +50,7 @@ function App() {
     const response = await fetch('./5_letters.csv');
     const csvData = await response.text();
     setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2500)].slice(0, -1).slice(1)));
+    setAllowedWords(csvData.slice(0, -1).slice(1).split("\",\""))
   }
 
   // resets the game state and gets a new word
@@ -55,6 +58,7 @@ function App() {
     setCurrentGuess('')
     setPreviousGuesses([])
     setGameState('preGame')
+    setShaking(false)
     loadCSV()
     // fixes a bug where hitting enter resets the game after hitting the new word button
     event.target.blur()
@@ -72,6 +76,16 @@ function App() {
     loadCSV()
   }, [])
 
+
+  const validWord = (word) => {
+    if (allowedWords.includes(word)) {
+      return true
+    }
+    setShaking(true)
+    setTimeout(() => setShaking(false), 500)
+    setTimeout(() => setCurrentGuess(''), 500)
+    return false
+  }
   
 
   useEffect(() => {
@@ -90,8 +104,8 @@ function App() {
         }
         // Submitting a guess
         if (event.key === 'Enter' && currentGuess.length == 5) {
-          if (gameState === "showingLoss" || gameState === "showingWon") {
-            pass
+          if (gameState === "showingLoss" || gameState === "showingWon" || !validWord(currentGuess.toLowerCase())) {
+            null
           } else {
             if (answer === currentGuess.toLowerCase()) {
               console.log("You win")
@@ -103,6 +117,7 @@ function App() {
               } else {
                 setPreviousGuesses([...previousGuesses,currentGuess])
                 setCurrentGuess('')
+                setShaking(false)
                 setGameState('playing')
               }
             }
@@ -118,7 +133,7 @@ function App() {
       <h1>WORDLE</h1>
       <DifficultySlider guessesAllowed={guessesAllowed} setGuessesAllowed={setGuessesAllowed} gameState={gameState}/>
       <button type="button" className='newWord' onClick={newWordF}>New Word</button>
-      <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} gameState={gameState} guessesAllowed={guessesAllowed}/>
+      <Board currentGuess={currentGuess} previousGuesses={previousGuesses} answer={answer} gameState={gameState} guessesAllowed={guessesAllowed} shaking={shaking}/>
       <WinPopUp gameState={gameState} resetGame={closeWinPopUp} />
       <LosePopUp gameState={gameState} resetGame={closeLostPopUp} answer={answer} />
       <Keyboard onLetter={handleLetter} onBackspace={handleBackspace} onEnter={handleEnter} previousGuesses={previousGuesses} answer={answer}/>

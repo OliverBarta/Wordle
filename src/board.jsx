@@ -1,7 +1,7 @@
 
 import './board.css'
 
-function Board({currentGuess, previousGuesses, answer, gameState, guessesAllowed}) {
+function Board({currentGuess, previousGuesses, answer, gameState, guessesAllowed, shaking}) {
     const checkYellow = (guess, letter, answer, index) => {
         // checks if a letter of a guess should be yellow (return true) or not (return false)
         var guessArr = guess.split("")
@@ -57,7 +57,7 @@ function Board({currentGuess, previousGuesses, answer, gameState, guessesAllowed
                     {[0,1,2,3,4].map(i => (
                         <div key={i} className={gameState === "won" || gameState === "showingWon" ? "SquareGreen" : 
                         gameState === "lost" || gameState === "showingLoss" ? "SquareRed" :
-                        "Square"}>
+                        shaking ? "Square shake" : "Square"}>
                         {currentGuess[i] || ''}
                         </div>
                     ))}

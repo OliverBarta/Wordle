@@ -169,7 +169,7 @@
 .newWord {
   all: unset;
   position: fixed;
-  padding: 30px;
+  padding: 15px;
   transition: scale 0.15s ease-in, color 0.15s ease-in;
   color: var(--text)
 }
