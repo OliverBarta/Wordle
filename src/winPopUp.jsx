@@ -5,12 +5,12 @@ import trumpetLeft from './assets/trumpetsmirrored.png'
 import './winPopUp.css'
 
 function WinPopUp({gameState, resetGame}) {
+    
     // render nothing if the game isn't won
-    if (gameState !== "won") return null;
-
     const canvasRef = useRef(null)
 
     useEffect(() => {
+        if (gameState !== "won") return
         const canvas = canvasRef.current
         const ctx = canvas.getContext('2d')
         canvas.width = window.innerWidth
@@ -44,7 +44,9 @@ function WinPopUp({gameState, resetGame}) {
         }
         animate()
         return () => cancelAnimationFrame(animFrame)
-    }, [])
+    }, [gameState])
+
+    if (gameState !== "won") return null
 
     return (
         <>

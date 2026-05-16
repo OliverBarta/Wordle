@@ -49,8 +49,8 @@ function App() {
   async function loadCSV() {
     const response = await fetch('./5_letters.csv');
     const csvData = await response.text();
-    setAnswer(String(csvData.split(",")[Math.floor(Math.random() * 2500)].slice(0, -1).slice(1)));
     setAllowedWords(csvData.slice(0, -1).slice(1).split("\",\""))
+    setAnswer(String(csvData.split(",")[Math.floor(Math.random() * (csvData.slice(0, -1).slice(1).split("\",\"")).length-1)].slice(0, -1).slice(1)));
   }
 
   // resets the game state and gets a new word
@@ -78,12 +78,12 @@ function App() {
 
 
   const validWord = (word) => {
+    console.log(answer)
     if (allowedWords.includes(word)) {
       return true
     }
     setShaking(true)
     setTimeout(() => setShaking(false), 500)
-    setTimeout(() => setCurrentGuess(''), 500)
     return false
   }
   
