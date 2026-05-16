@@ -78,7 +78,6 @@ function App() {
 
 
   const validWord = (word) => {
-    console.log(answer)
     if (allowedWords.includes(word)) {
       return true
     }
